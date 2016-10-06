@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  doi: MyString
+  title: MyString
+  journal_name: MyString
+  vol: 1
+  year: 1
+  issue: 1
+  start_page: 1
+
+two:
+  doi: MyString
+  title: MyString
+  journal_name: MyString
+  vol: 1
+  year: 1
+  issue: 1
+  start_page: 1
