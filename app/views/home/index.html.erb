@@ -1,11 +1,11 @@
-<h2>Welcome <%= @user.first_name %>, to Scientific Article Sharing Website! </h2>
-
+<h2>Scientific Article Sharing Website! </h2>
 <h4><i>Scientific Literatures Shared by Authors</i></h4>
 <br>
+<h4>Welcome <%= @user.first_name %></h4>
 <h4>How it works:</h4>
 <ul>
   <li>Authors post information on their scientific literatures.</li>
-  <li>Readers search scientific literatures by doi(Digital object identifier) or by authors.</li>
+  <li>Readers search scientific literatures by doi(Digital object identifier).</li>
   <li>Readers, after finding the literature they want to read, request it from the author of the literature.</li>
   <li>Author sends the literature to Reader via email.</li>
 </ul>
@@ -15,4 +15,13 @@
 <%= link_to "Add your Article", new_article_path %>
 <br>
 </br>
+
 <h4>Search</h4>
+
+<%= form_tag searches_path, :method => 'post' do %>
+  <p> type DOI of the literature you are looking for: </P>
+  <p>
+    <%= text_field_tag :doi %>
+    <%= submit_tag "Search", :name => nil %>
+  </p>
+<% end %>

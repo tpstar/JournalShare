@@ -4,6 +4,6 @@ Rails.application.routes.draw do
   root to: "home#index"
 
   resources :articles
-  # resource :journals
+  resources :searches 
   # get '/auth/:provider/callback', to: 'sessions#create'
 end

@@ -1,11 +1,15 @@
 <h2>Posted Article</h2>
 
 <p>
-  <%= @article.title %>
+  <%= @article.title if @article.title%>
 </p>
 
 <p>
-  <%=@article.journal.name %> <strong><%= @article.year %></strong> <i><%= @article.vol %></i> (<%= @article.issue %>) p<%= @article.start_page %>
+  <%=@article.journal.name if @article.journal%>
+  <strong><%= @article.year if @article.year%></strong>
+  <i><%= @article.vol if @article.vol%></i>
+  (<%= @article.issue if @article.issue%>)
+  p<%= @article.start_page if @article.start_page %>
 </p>
 
 <p>
