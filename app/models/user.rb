@@ -4,14 +4,20 @@ class User < ApplicationRecord
   devise :omniauthable, :omniauth_providers => [:google_oauth2]
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
+
+  has_many :article_users
+  has_many :articles, :through => :article_users
+
+
   def self.from_omniauth(access_token)
      data = access_token.info
      user = User.where(:email => data["email"]).first
 
-     # Uncomment the section below if you want users to be created if they don't exist
      unless user
          user = User.create(
-            email: data["email"],
+            email: data[:email],
+            first_name: data[:first_name],
+            last_name: data[:last_name],
             password: Devise.friendly_token[0,20]
          )
      end

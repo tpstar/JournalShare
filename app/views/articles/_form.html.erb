@@ -1,0 +1,25 @@
+<%= form_for article do |f| %>
+
+  <%= f.label :doi %>
+  <%= f.text_field :doi %>
+  <br>
+  <%= f.label :title %>
+  <%= f.text_field :title %>
+  <br>
+  <%= f.label :journal %>
+  <%= f.select :journal, options_for_select(@journals.collect{ |j| [j.name, j.id] }) %>
+  <br>
+  <%= f.label :year %>
+  <%= f.number_field :year %>
+  <br>
+  <%= f.label :vol %>
+  <%= f.number_field :vol %>
+  <br>
+  <%= f.label :issue %>
+  <%= f.number_field :issue %>
+  <br>
+  <%= f.label :start_page %>
+  <%= f.number_field :start_page %>
+  <br>
+  <%= f.submit %>
+<% end %>
