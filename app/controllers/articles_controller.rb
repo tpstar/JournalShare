@@ -21,7 +21,7 @@ class ArticlesController < ApplicationController
   end
 
   def article_params
-    params.require(:article).permit(:doi, :title, :year, :vol, :issue, :start_page)
+    params.require(:article).permit(:doi, :journal_id, :title, :year, :vol, :issue, :start_page)
   end
 
 end

@@ -1,11 +1,17 @@
 <h2>Posted Article</h2>
-  <p>
-    DOI: <%= @article.doi %>
-  </p>
-  <p>
-    <%= @article.title %>
-  </p>
 
-  <p>
-    <strong><%= @article.year %></strong> <i><%= @article.vol %></i> (<%= @article.issue %>) p<%= @article.start_page %>
-  </p>
+<p>
+  <%= @article.title %>
+</p>
+
+<p>
+  <%=@article.journal.name %> <strong><%= @article.year %></strong> <i><%= @article.vol %></i> (<%= @article.issue %>) p<%= @article.start_page %>
+</p>
+
+<p>
+  DOI: <%= @article.doi %>
+</p>
+
+<p>
+  posted by <%= @article.users.last.first_name %> <%= @article.users.last.last_name %>
+</p>

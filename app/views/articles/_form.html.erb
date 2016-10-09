@@ -7,7 +7,7 @@
   <%= f.text_field :title %>
   <br>
   <%= f.label :journal %>
-  <%= f.select :journal, options_for_select(@journals.collect{ |j| [j.name, j.id] }) %>
+  <%= f.select :journal_id, options_for_select(@journals.collect{ |j| [j.name, j.id] }) %>
   <br>
   <%= f.label :year %>
   <%= f.number_field :year %>
