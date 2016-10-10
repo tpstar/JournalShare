@@ -8,6 +8,15 @@ class User < ApplicationRecord
   has_many :article_users
   has_many :articles, :through => :article_users
 
+  has_many :active_requests, class_name: 'Request',
+                             foreign_key: 'reader_id',
+                             dependent: :destroy
+  has_many :passive_requests, class_name: 'Request',
+                              foreign_key: 'author_id',
+                              dependent: :destroy
+  has_many :authors, :through => :active_requests
+  has_many :readers, :through => :passive_requests
+
 
   def self.from_omniauth(access_token)
      data = access_token.info
