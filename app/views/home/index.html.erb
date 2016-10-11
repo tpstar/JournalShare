@@ -1,16 +1,22 @@
 <h2>Scientific Article Sharing Website! </h2>
 <h4><i>Scientific Literatures Shared by Authors</i></h4>
 <br>
-<h4>Welcome <%= @user.first_name %></h4>
-<h4>How it works:</h4>
-<ul>
-  <li>Authors post information on their scientific literatures.</li>
-  <li>Readers search scientific literatures by doi(Digital object identifier).</li>
-  <li>Readers, after finding the literature they want to read, request it from the author of the literature.</li>
-  <li>Author sends the literature to Reader via email.</li>
-</ul>
+
+<% if current_user && current_user.passive_requests.any? %>
+  <h4> Request from other users </h4>
+  <ul>
+  <% current_user.passive_requests.each do |req| %>
+    <li>
+      <%= User.find(req.reader_id).first_name %>
+      requested "<%= link_to Article.find(req.article_id).title, demand_path(req) %>"
+    </li>
+  <% end %>
+  </ul>
+<% end %>
 <br>
+
 <h4> Post your article </h4>
+
 <h5>If you are an author of scientific literatures and would like to share yours with others, please list your literatures here!</h5>
 <%= link_to "Add your Article", new_article_path %>
 <br>

@@ -5,13 +5,13 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  has_many :article_users
-  has_many :articles, :through => :article_users
+  has_many :article_authors
+  has_many :articles, :through => :article_authors
 
-  has_many :active_requests, class_name: 'Request',
+  has_many :active_requests, class_name: 'Demand',
                              foreign_key: 'reader_id',
                              dependent: :destroy
-  has_many :passive_requests, class_name: 'Request',
+  has_many :passive_requests, class_name: 'Demand',
                               foreign_key: 'author_id',
                               dependent: :destroy
   has_many :authors, :through => :active_requests

@@ -10,7 +10,7 @@ class ArticlesController < ApplicationController
     else
       @article = Article.new(article_params)
     end
-    @article.users << current_user unless @article.users.include?(current_user)
+    @article.authors << current_user unless @article.authors.include?(current_user)
     @article.save
     #binding.pry
     redirect_to @article
@@ -18,6 +18,7 @@ class ArticlesController < ApplicationController
 
   def show
     @article = Article.find(params[:id])
+    #@request = current_user.active_requests.build(author_id: @article.users.last.id)
   end
 
   def article_params

@@ -1,7 +1,9 @@
 class HomeController < ApplicationController
 
   def index
-    @user = current_user
+  end
+
+  def description
   end
 
 end

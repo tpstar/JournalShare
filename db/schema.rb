@@ -12,9 +12,9 @@
 
 ActiveRecord::Schema.define(version: 20161010024423) do
 
-  create_table "article_users", force: :cascade do |t|
+  create_table "article_authors", force: :cascade do |t|
     t.integer  "article_id"
-    t.integer  "user_id"
+    t.integer  "author_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -31,15 +31,16 @@ ActiveRecord::Schema.define(version: 20161010024423) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "journals", force: :cascade do |t|
-    t.string   "name"
+  create_table "demands", force: :cascade do |t|
+    t.integer  "author_id"
+    t.integer  "reader_id"
+    t.integer  "article_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "requests", force: :cascade do |t|
-    t.integer  "author_id"
-    t.integer  "reader_id"
+  create_table "journals", force: :cascade do |t|
+    t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

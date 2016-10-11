@@ -17,5 +17,13 @@
 </p>
 
 <p>
-  posted by <%= @article.users.last.first_name %> <%= @article.users.last.last_name %>
+  <% if @article.authors.any? %>
+    posted by <%= @article.authors.last.first_name%> <%= @article.authors.last.last_name%>
+  <% end %>
+</p>
+
+<p>
+  <% unless @article.authors.include?(current_user) %>
+    <%= render partial: 'request_form', locals: {article: @article} %>
+  <% end %>
 </p>

@@ -1,6 +1,10 @@
 <nav class="navbar navbar-default">
     <ul class="nav nav-tabs">
+        <% if user_signed_in? %>
+        <li role="presentation"> <%= link_to "Welcome #{current_user.first_name}", author_path(current_user)  %></li>
+        <% end %>
         <li> <%= link_to "Home", root_path %> </li>
+        <li> <%= link_to "How it works", description_path %> </li>
         <% if user_signed_in? %>
           <li role="presentation"> <%= link_to "Sign out", destroy_user_session_path, :method => :delete%></li>
         <% else %>
