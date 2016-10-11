@@ -1,0 +1,23 @@
+<% reader = User.find(@demand.reader_id) %>
+<h4>You got a request from <%= reader.first_name %> <%= reader.last_name%>.</h4>
+<p>
+  Please send the requester (email: <%= reader.email %>)
+</p>
+<p>
+  <% article = Article.find(@demand.article_id) %>
+  <%= article.title if article.title%>
+</p>
+<p>
+  <i><%=article.journal.name if article.journal%></i>
+  <strong><%= article.year if article.year%></strong>
+  <i><%= article.vol if article.vol%></i>
+  (<%= article.issue if article.issue%>)
+  p<%= article.start_page if article.start_page %>
+</p>
+
+<br>
+
+<p>
+  If you have sent the requested article, please click here.
+  <%= link_to "Sent", demand_path(@demand), method: destroy %>
+</p>

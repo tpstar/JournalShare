@@ -15,4 +15,8 @@ class DemandsController < ApplicationController
     end
   end
 
+  def show
+    @demand = Demand.find(params[:id])
+  end
+
 end

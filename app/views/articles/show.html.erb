@@ -5,7 +5,7 @@
 </p>
 
 <p>
-  <%=@article.journal.name if @article.journal%>
+  <i><%=article.journal.name if @article.journal%></i>
   <strong><%= @article.year if @article.year%></strong>
   <i><%= @article.vol if @article.vol%></i>
   (<%= @article.issue if @article.issue%>)
