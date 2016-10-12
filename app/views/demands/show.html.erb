@@ -1,7 +1,7 @@
 <% reader = User.find(@demand.reader_id) %>
 <h4>You got a request from <%= reader.first_name %> <%= reader.last_name%>.</h4>
 <p>
-  Please send the requester (email: <%= reader.email %>)
+  Please send <%= reader.first_name %> <%= reader.last_name%> (email: <%= reader.email %>) the article shown below.
 </p>
 <p>
   <% article = Article.find(@demand.article_id) %>
@@ -14,10 +14,12 @@
   (<%= article.issue if article.issue%>)
   p<%= article.start_page if article.start_page %>
 </p>
-
+<p>
+  DOI: <%= article.doi %>
+</p>
 <br>
 
 <p>
   If you have sent the requested article, please click here.
-  <%= link_to "Sent", demand_path(@demand), method: destroy %>
+  <%= link_to "Sent", demand_path(@demand), :method => :delete %>
 </p>

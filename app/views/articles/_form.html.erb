@@ -8,6 +8,10 @@
   <br>
   <%= f.label :journal %>
   <%= f.select :journal_id, options_for_select(@journals.collect{ |j| [j.name, j.id] }) %>
+
+  or, type the abbreviation of journal here!
+  <%= f.text_field :journal_name %>
+
   <br>
   <%= f.label :year %>
   <%= f.number_field :year %>

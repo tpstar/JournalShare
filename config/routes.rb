@@ -8,5 +8,6 @@ Rails.application.routes.draw do
   resources :searches
   resources :demands
   get '/users/:id', to: 'authors#show', as: 'author'
+  # get '/demands/:id', to: 'demands#destroy', as: 'destroy_demand'
   # get '/auth/:provider/callback', to: 'sessions#create'
 end

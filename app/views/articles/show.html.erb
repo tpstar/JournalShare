@@ -5,11 +5,11 @@
 </p>
 
 <p>
-  <i><%=article.journal.name if @article.journal%></i>
+  <i><%=@article.journal.name if @article.journal%></i>
   <strong><%= @article.year if @article.year%></strong>
   <i><%= @article.vol if @article.vol%></i>
-  (<%= @article.issue if @article.issue%>)
-  p<%= @article.start_page if @article.start_page %>
+  <%= "(#{@article.issue})" if @article.issue%>
+  <%= "p#{@article.start_page}" if @article.start_page %>
 </p>
 
 <p>
@@ -23,7 +23,11 @@
 </p>
 
 <p>
-  <% unless @article.authors.include?(current_user) %>
+  <% if @article.authors.include?(current_user) %>
+    <font color="blue"><%= "You are the author of the article" %></font>
+  <% elsif @article.demands.include?(Demand.find_by(reader_id: current_user.id)) %>
+    <font color="red"><%= "You have already requested the article" %></font>
+  <% else %>
     <%= render partial: 'request_form', locals: {article: @article} %>
   <% end %>
 </p>

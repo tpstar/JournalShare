@@ -19,4 +19,11 @@ class DemandsController < ApplicationController
     @demand = Demand.find(params[:id])
   end
 
+  def destroy
+    @demand = Demand.find(params[:id])
+    @demand.destroy
+    flash[:notice] = "The request has been removed."
+    redirect_to root_path
+  end
+
 end

@@ -6,14 +6,18 @@ class ArticlesController < ApplicationController
   end
 
   def create
-    if @article = Article.find_by(doi: params[:article][:doi])
+    # binding.pry
+    if params[:article][:doi] == ""
+      flash[:alert] = "Please add DOI (Digital object identifier)."
+      redirect_to new_article_path
     else
-      @article = Article.new(article_params)
+      unless @article = Article.find_by(doi: params[:article][:doi])
+        @article = Article.new(article_params)
+      end
+      @article.authors << current_user unless @article.authors.include?(current_user)
+      @article.save
+      redirect_to @article
     end
-    @article.authors << current_user unless @article.authors.include?(current_user)
-    @article.save
-    #binding.pry
-    redirect_to @article
   end
 
   def show
@@ -22,7 +26,7 @@ class ArticlesController < ApplicationController
   end
 
   def article_params
-    params.require(:article).permit(:doi, :journal_id, :title, :year, :vol, :issue, :start_page)
+    params.require(:article).permit(:doi, :journal_id, :title, :year, :vol, :issue, :start_page, :journal_name)
   end
 
 end
