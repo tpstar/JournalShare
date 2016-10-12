@@ -4,10 +4,14 @@ Rails.application.routes.draw do
   root to: 'home#index'
   get 'description', to: 'home#description'
 
+  #nested resources
+  resources :users, as: 'author' do
+    resources :articles
+  end
+
   resources :articles
   resources :searches
   resources :demands
-  get '/users/:id', to: 'authors#show', as: 'author'
-  # get '/demands/:id', to: 'demands#destroy', as: 'destroy_demand'
+  #get '/users/:id', to: 'authors#show'
   # get '/auth/:provider/callback', to: 'sessions#create'
 end
