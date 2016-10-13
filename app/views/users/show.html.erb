@@ -1,0 +1,14 @@
+<p>
+  Welcome <%= current_user.first_name %> <%= current_user.last_name %>
+</p>
+<br>
+<h4>Edit Your Profile or Cancel Your Account</h4>
+<ul>
+  <li><%= link_to "Edit or Cancel", edit_user_registration_path %></li>
+</ul>
+
+
+<h4> Your posted articles </h4>
+<ul>
+  <li><%= link_to "Your Articles", user_articles_path(current_user) %></li>
+</ul>

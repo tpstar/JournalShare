@@ -7,8 +7,8 @@ class User < ApplicationRecord
 
   validates :first_name, :last_name, presence: true
 
-  has_many :article_authors
-  has_many :articles, :through => :article_authors
+  has_many :article_users
+  has_many :articles, :through => :article_users
 
   has_many :active_requests, class_name: 'Demand',
                              foreign_key: 'reader_id',

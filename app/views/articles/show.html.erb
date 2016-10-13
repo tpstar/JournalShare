@@ -17,13 +17,13 @@
 </p>
 
 <p>
-  <% if @article.authors.any? %>
-    posted by <%= @article.authors.last.first_name%> <%= @article.authors.last.last_name%>
+  <% if @article.users.any? %>
+    posted by <%= @article.users.last.first_name%> <%= @article.users.last.last_name%>
   <% end %>
 </p>
 
 <p>
-  <% if @article.authors.include?(current_user) %>
+  <% if @article.users.include?(current_user) %>
     <font color="blue"><%= "You are the author of the article" %></font>
   <% elsif @article.demands.include?(Demand.find_by(reader_id: current_user.id)) %>
     <font color="red"><%= "You have already requested the article" %></font>

@@ -14,9 +14,17 @@ class ArticlesController < ApplicationController
       unless @article = Article.find_by(doi: params[:article][:doi])
         @article = Article.new(article_params)
       end
-      @article.authors << current_user unless @article.authors.include?(current_user)
+      @article.users << current_user unless @article.users.include?(current_user)
       @article.save
       redirect_to @article
+    end
+  end
+
+  def index
+    if params[:user_id]
+      @articles = User.find(params[:user_id]).articles
+    else
+      @articles = Article.all
     end
   end
 

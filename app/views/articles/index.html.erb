@@ -1,0 +1,4 @@
+<h4>Your Articles</h4>
+<% current_user.articles.each do |a| %>
+  <li><%= a.doi %> <%= link_to "#{a.title}", user_article_path(current_user, a) %></li>
+<% end %>

@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   get 'description', to: 'home#description'
 
   #nested resources
-  resources :users, as: 'author' do
+  resources :users do
     resources :articles
   end
 

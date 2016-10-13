@@ -12,9 +12,9 @@
 
 ActiveRecord::Schema.define(version: 20161010024423) do
 
-  create_table "article_authors", force: :cascade do |t|
+  create_table "article_users", force: :cascade do |t|
     t.integer  "article_id"
-    t.integer  "author_id"
+    t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
