@@ -21,7 +21,8 @@ class ArticlesController < ApplicationController
 
   def index
     if params[:user_id]
-      @articles = User.find(params[:user_id]).articles
+      @author =  User.find(params[:user_id])
+      @articles = @author.articles
     else
       @articles = Article.all
     end

@@ -6,4 +6,7 @@ class HomeController < ApplicationController
   def description
   end
 
+  def author_search
+  end
+
 end

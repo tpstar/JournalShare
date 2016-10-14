@@ -7,6 +7,7 @@
         <li> <%= link_to "How it works", description_path %> </li>
         <% if user_signed_in? %>
           <li role="presentation"> <%= link_to "Articles", articles_path %></li>
+          <li role="presentation"> <%= link_to "Author Search", users_path %></li>
           <li role="presentation"> <%= link_to "Sign out", destroy_user_session_path, :method => :delete%></li>
         <% else %>
           <li role="presentation"> <%= link_to "Sign in", new_user_session_path %></li>

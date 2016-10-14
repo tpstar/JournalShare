@@ -35,4 +35,9 @@ class User < ApplicationRecord
      user
    end
 
+   def self.search(first_name, last_name)
+    #  binding.pry
+     User.where("first_name = ? AND last_name = ?" , first_name, last_name)
+   end
+
 end

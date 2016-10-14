@@ -1,4 +1,9 @@
-<h4>Articles</h4>
+<h4>
+  Articles
+  <% if @author %>
+    <%= "by " + @author.first_name %> <%= @author.last_name %>
+  <% end %>
+</h4>
 <% @articles.recent.each do |a| %>
   <p><%= a.doi %> </p>
   <p><%= link_to "#{a.title}", user_article_path(current_user, a) %> </p>
