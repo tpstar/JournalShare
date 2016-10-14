@@ -6,9 +6,15 @@
 <ul>
   <li><%= link_to "Edit or Cancel", edit_user_registration_path %></li>
 </ul>
+<br>
 
+<h4>Add Your Article</h5>
+  <ul>
+    <li><%= link_to "Add your Article", new_article_path %></li>
+  </ul>
+<br>
 
-<h4> Your posted articles </h4>
+<h4> Your Posted Articles </h4>
 <ul>
   <li><%= link_to "Your Articles", user_articles_path(current_user) %></li>
 </ul>

@@ -6,7 +6,6 @@ class ArticlesController < ApplicationController
   end
 
   def create
-    # binding.pry
     if params[:article][:doi] == ""
       flash[:alert] = "Please add DOI (Digital object identifier)."
       redirect_to new_article_path
@@ -30,7 +29,6 @@ class ArticlesController < ApplicationController
 
   def show
     @article = Article.find(params[:id])
-    #@request = current_user.active_requests.build(author_id: @article.users.last.id)
   end
 
   def article_params
