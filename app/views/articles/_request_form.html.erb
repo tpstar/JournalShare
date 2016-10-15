@@ -2,5 +2,5 @@
   <div><%= hidden_field_tag :author_id, article.users.last.id %></div>
   <div><%= hidden_field_tag :reader_id, current_user.id %></div>
   <div><%= hidden_field_tag :article_id, article.id %></div>
-  <%= f.submit "Request this journal from its author", class: "btn btn-primary" %>
+  <%= f.submit "Request this Article from its Author", class: "btn btn-primary" %>
 <% end %>

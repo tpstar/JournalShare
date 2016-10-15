@@ -1,24 +1,19 @@
-# README
+# Description
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This app is for a community of scientists and engineers, who wants to share their articles.
 
-Things you may want to cover:
+They can list their articles on this app. And they can also search an article they want to read by DOI (Digital Object Identifier System).
 
-* Ruby version
+Please read a blog post at for more detail description.
 
-* System dependencies
+# Usage
 
-* Configuration
+To use this app, clone, run bundle install, rake db:migrate and then run rails server.
 
-* Database creation
+# Contribution
 
-* Database initialization
+Bug reports and pull requests are welcome on GitHub at https://github.com/tpstar/JournalShare. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the Contributor Covenant code of conduct.
 
-* How to run the test suite
+# License
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+The app is available as open source under the terms of the MIT License.
