@@ -4,7 +4,7 @@ This app is for a community of scientists and engineers, who wants to share thei
 
 They can list their articles on this app. And they can also search an article they want to read by DOI (Digital Object Identifier System).
 
-Please read a blog post at for more detail description.
+Please read a blog post at https://medium.com/@tpstar/ruby-on-rails-web-app-for-sharing-scientific-articles-449652d0c66#.g8821f5im for more detail description.
 
 # Usage
 
