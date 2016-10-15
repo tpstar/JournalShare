@@ -1,21 +1,20 @@
-<% reader = User.find(@demand.reader_id) %>
-<h4>You got a request from <%= reader.first_name %> <%= reader.last_name%>.</h4>
+<h4>You got a request from <%= requested_reader.first_name %> <%= requested_reader.last_name%>.</h4>
 <p>
-  Please send <%= reader.first_name %> <%= reader.last_name%> (email: <%= reader.email %>) the article shown below.
+  Please send <%= requested_reader.first_name %> <%= requested_reader.last_name%> (email: <%= requested_reader.email %>) the article shown below.
+</p>
+
+<p>
+  <%= requested_article.title if requested_article.title%>
 </p>
 <p>
-  <% article = Article.find(@demand.article_id) %>
-  <%= article.title if article.title%>
+  <i><%=requested_article.journal.name if requested_article.journal%></i>
+  <strong><%= requested_article.year if requested_article.year%></strong>
+  <i><%= requested_article.vol if requested_article.vol%></i>
+  (<%= requested_article.issue if requested_article.issue%>)
+  p<%= requested_article.start_page if requested_article.start_page %>
 </p>
 <p>
-  <i><%=article.journal.name if article.journal%></i>
-  <strong><%= article.year if article.year%></strong>
-  <i><%= article.vol if article.vol%></i>
-  (<%= article.issue if article.issue%>)
-  p<%= article.start_page if article.start_page %>
-</p>
-<p>
-  DOI: <%= article.doi %>
+  DOI: <%= requested_article.doi %>
 </p>
 <br>
 

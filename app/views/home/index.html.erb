@@ -15,19 +15,31 @@
 <% end %>
 <br>
 
-<h4> Post your article </h4>
+<h4> List your article </h4>
 
 <h5>If you are an author of scientific literatures and would like to share yours with others, please list your literatures here!</h5>
-<%= link_to "Add your Article", new_article_path %>
+<% if user_signed_in? %>
+  <%= link_to "List your Article", new_article_path %>
+<% end %>
 <br>
 </br>
 
 <h4>Search</h4>
-
-<%= form_tag searches_path, :method => 'post' do %>
-  <p> type DOI of the literature you are looking for: </P>
-  <p>
-    <%= text_field_tag :doi %>
-    <%= submit_tag "Search", :name => nil %>
-  </p>
+<p> type DOI of the literature you are looking for: </P>
+<% if user_signed_in? %>
+  <%= form_tag searches_path, :method => 'post' do %>
+    <p>
+      <%= text_field_tag :doi %>
+      <%= submit_tag "Search", :name => nil %>
+    </p>
+  <% end %>
+<% else %>
+  <br>
+  <font color="green">
+      Please
+      <%= link_to "Sign up", new_user_registration_path %>
+      or
+      <%= link_to "Sign in", new_user_session_path %>
+      to List or Search Articles
+    </font>
 <% end %>
