@@ -2,10 +2,12 @@ class ArticlesController < ApplicationController
 
   def new
     @article = Article.new
+    @article.build_journal
     @journals = Journal.order("name ASC")
   end
 
   def create
+    binding.pry
     if params[:article][:doi] == ""
       flash[:alert] = "Please add DOI (Digital object identifier)."
       redirect_to new_article_path
@@ -33,7 +35,7 @@ class ArticlesController < ApplicationController
   end
 
   def article_params
-    params.require(:article).permit(:doi, :journal_id, :title, :year, :vol, :issue, :start_page, :journal_name)
+    params.require(:article).permit(:doi, :title, :year, :vol, :issue, :start_page, :journal_attributes => [:id, :name])
   end
 
 end

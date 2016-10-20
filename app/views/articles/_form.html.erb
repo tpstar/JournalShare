@@ -6,12 +6,13 @@
   <%= f.label :title %>
   <%= f.text_field :title %>
   <br>
-  <%= f.label :journal %>
-  <%= f.select :journal_id, options_for_select(@journals.collect{ |j| [j.name, j.id] }) %>
+  <%= f.fields_for :journal do |j| %>
+    <%= j.label :journal %>
+    <%= j.select :id, options_for_select(@journals.collect{ |journal| [journal.name, journal.id] }) %>
 
-  or, type the abbreviation of journal here!
-  <%= f.text_field :journal_name %>
-
+    or, type the abbreviation of journal here!
+    <%= j.text_field :name %>
+  <% end %>
   <br>
   <%= f.label :year %>
   <%= f.number_field :year %>
