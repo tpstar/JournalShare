@@ -19,7 +19,7 @@
 
 <h5>If you are an author of scientific literatures and would like to share yours with others, please list your literatures here!</h5>
 <% if user_signed_in? %>
-  <%= link_to "List your Article", new_article_path %>
+  <%= link_to "List your Article", new_user_article_path(current_user) %>
 <% end %>
 <br>
 </br>

@@ -9,7 +9,3 @@
   <p><%= link_to "#{a.title}", user_article_path(current_user, a) %> </p>
 <% end %>
 <br>
-<% if user_signed_in? %>
-  <h5>Add a New Article You Authored</h5>
-  <%= link_to "Add your Article", new_article_path %>
-<% end %>
