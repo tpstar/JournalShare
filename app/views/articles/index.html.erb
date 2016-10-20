@@ -5,7 +5,11 @@
   <% end %>
 </h4>
 <% @articles.recent.each do |a| %>
-  <p><%= a.doi %> </p>
+  <p>DOI: <%= a.doi %> </p>
   <p><%= link_to "#{a.title}", user_article_path(current_user, a) %> </p>
 <% end %>
 <br>
+<% if user_signed_in? %>
+  <h5>Add a New Article You Authored</h5>
+  <%= link_to "Add your Article", new_article_path %>
+<% end %>
