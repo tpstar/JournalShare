@@ -19,7 +19,11 @@ class Article < ApplicationRecord
   # end
 
   def journal_attributes=(journal_attributes)
-    binding.pry
+    if journal_attributes[:name] != ""
+      self.journal = Journal.find_or_create_by(name: journal_attributes[:name])
+    else
+      self.journal = Journal.find(journal_attributes[:id])
+    end
   end
 
 end
