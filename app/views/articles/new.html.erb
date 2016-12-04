@@ -1,5 +1,10 @@
 <h2>Add a New Article</h2>
 <%= render :partial => 'form', :locals => {article: @article} %>
+<div id="articleResult">
+  <h3 id="articleTitle"></h3>
+</div>
+
+</div>
 <script type="text/javascript" charset="utf-8">
   $(function () {
     $('form').submit(function(event) {
@@ -7,6 +12,10 @@
       event.preventDefault();
       var values = $(this).serialize();
       var posting = $.post('/articles', values);
+      posting.done(function(article) {
+        $("#articleTitle").text(article["title"]);
+        console.log(article);
+      })
     });
   });
 </script>

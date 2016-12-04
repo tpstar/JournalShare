@@ -16,7 +16,8 @@ class ArticlesController < ApplicationController
       end
       @article.users << current_user unless @article.users.include?(current_user)
       @article.save
-      redirect_to @article
+      # redirect_to @article
+      render json: @article, status: 201
     end
   end
 
