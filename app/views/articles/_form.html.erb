@@ -28,3 +28,12 @@
   <br>
   <%= f.submit %>
 <% end %>
+<script type="text/javascript" charset="utf-8">
+  $(function () {
+    $('form').submit(function(event) {
+      //prevent form from submitting the default way
+      event.preventDefault();
+      alert("hello");
+    });
+  });
+</script>
