@@ -1,9 +1,8 @@
 <h2>Add a New Article</h2>
 <%= render :partial => 'form', :locals => {article: @article} %>
-<div id="articleResult">
-  <h3 id="articleTitle"></h3>
+<div id="articleTitle">
 </div>
-
+<div id="articleResult">
 </div>
 <script type="text/javascript" charset="utf-8">
   $(function () {
@@ -13,7 +12,12 @@
       var values = $(this).serialize();
       var posting = $.post('/articles', values);
       posting.done(function(article) {
-        $("#articleTitle").text(article["title"]);
+        $("#articleTitle").html("<h5>Thank you. You posted your article ; </h5><h5>" + article["title"] + "</h5>");
+        $("#articleResult").html("<p><i>" + article["journal_id"] + "</i>" + //needs to change this to journal name
+                                    "<strong> " + article["year"] + "</strong>" + //needs to not show when the attribute is empty
+                                    "<i> " + article["vol"] + "</i>" +
+                                    " (" + article["issue"] + ")" +
+                                    " p" + article["start_page"])
         console.log(article);
       })
     });
