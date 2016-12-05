@@ -32,6 +32,10 @@ class ArticlesController < ApplicationController
 
   def show
     @article = Article.find(params[:id])
+    respond_to do |format|
+      format.html {render :show }
+      format.json {render json: @artcle.to_json(include: :journal)}
+    end
   end
 
   def article_params
