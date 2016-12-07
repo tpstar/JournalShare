@@ -9,7 +9,7 @@ Rails.application.routes.draw do
     resources :articles
   end
 
-  resources :articles
+  resources :articles, :journals
   resources :searches
   resources :demands
   #get '/users/:id', to: 'authors#show'

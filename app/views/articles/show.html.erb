@@ -4,6 +4,7 @@
   <%= @article.title if @article.title%>
 </p>
 
+
 <p id="articleInfo">
   <i><%=@article.journal.name if @article.journal%></i>
   <strong><%= @article.year if @article.year%></strong>
@@ -32,17 +33,20 @@
   <% end %>
 </p>
 <br>
-<a href="#" class="js-next" data-id=<%=@article.id%>">Next Article</a>
+
+<a href="#" class="js-next" data-id="<%=@article.id%>">Next Article</a>
+
 
 <script type="text/javascript" charset="utf-8">
 $(function() {
   $(".js-next").on("click", function(){
     var nextId = parseInt($(".js-next").attr("data-id")) + 1;
     $.get("/articles/" + nextId + ".json", function(data) {
-      console.log("/articles/" + nextId + ".json");
       $(".articleTitle").text(data["title"]);
-      $(".js-next").attr("data-id", data["id"]); //reset id
+
+      $(".js-next").attr("data-id", data["id"]);
     });
+    console.log($(".js-next")["data-id"])
   });
 });
 </script>
