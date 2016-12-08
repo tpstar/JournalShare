@@ -41,12 +41,21 @@
 $(function() {
   $(".js-next").on("click", function(event){
     var nextId = parseInt($(".js-next").attr("data-id")) + 1;
-    $.get("/articles/" + nextId + ".json", function(data) {
-      $(".articleTitle").text(data["title"]);
+    $.get("/articles/" + nextId + ".json", function(article) {
+      $(".articleTitle").text(article["title"]);
+      $("#articleInfo").html(
+        "<i>"+ article["journal"]["name"] + "</i>" +
+        "<strong> " + article.year + "</strong>" +
+        "<i> " + article["vol"] + "</i>" +
+        " (" + article["issue"] + ")" +
+        " p" + article["start_page"]
+      )
 
-      $(".js-next").attr("data-id", data["id"]);
+      $(".js-next").attr("data-id", article["id"]);
     });
     event.preventDefault();
   });
 });
+
+
 </script>
