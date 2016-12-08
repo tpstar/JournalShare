@@ -6,6 +6,24 @@
 </h4>
 <% @articles.recent.each do |a| %>
   <p>DOI: <%= a.doi %> </p>
-  <p><%= link_to "#{a.title}", user_article_path(current_user, a) %> </p>
+  <p><%= link_to "#{a.title}", user_article_path(current_user, a) %>
+    <a href="#" class="js-more" data-id="<%=a.id%>"><font color="orange">More...</font></a>
+  </p>
+  <p id="articleInfo"></p>
 <% end %>
 <br>
+
+<script type="text/javascript" charset="utf-8">
+
+$(function() {
+  $(".js-more").on("click", function(event){
+    var id = parseInt($(".js-more").attr("data-id"));
+    console.log(id);
+    $.get("/articles/" + id + ".json", function(article) {
+      $("#articleInfo").html( articleListEntry(article) );
+    });
+    event.preventDefault();
+  });
+});
+
+</script>
