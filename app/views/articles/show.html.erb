@@ -43,12 +43,14 @@ $(function() {
     var nextId = parseInt($(".js-next").attr("data-id")) + 1;
     $.get("/articles/" + nextId + ".json", function(article) {
       $(".articleTitle").text(article["title"]);
+      var articleInfo = "";
+      if (article["journal"]["name"]) {articleInfo += "<i>"+ article["journal"]["name"] + "</i>"}
+      if (article["year"]) {articleInfo += "<strong> " + article["year"] + "</strong>"}
+      if (article["vol"]) {articleInfo += "<i> " + article["vol"] + "</i>"}
+      if (article["issue"]) {articleInfo += " (" + article["issue"] + ")"}
+      if (article["start_page"]) {articleInfo += " p" + article["start_page"]}
       $("#articleInfo").html(
-        "<i>"+ article["journal"]["name"] + "</i>" +
-        "<strong> " + article.year + "</strong>" +
-        "<i> " + article["vol"] + "</i>" +
-        " (" + article["issue"] + ")" +
-        " p" + article["start_page"]
+        articleInfo
       )
 
       $(".js-next").attr("data-id", article["id"]);
