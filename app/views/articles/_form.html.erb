@@ -8,7 +8,7 @@
   <br>
   <%= f.fields_for :journal do |j| %>
     <%= j.label :journal %>
-    <%= j.select :id, options_for_select(@journals.collect{ |journal| [journal.name, journal.id] }) %>
+    <%= j.select :id, options_for_select(@journals.collect{ |journal| [journal.name, journal.id] }), :include_blank => true %>
 
     or, type the abbreviation of journal here!
     <%= j.text_field :name %>
