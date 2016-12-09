@@ -15,12 +15,8 @@
       posting.done(function(article) {
         $("#articleTitle").html("<h4>Thank you. You posted the article ; </h4><h5>" + article["title"] +
                                 "  doi:" + article["doi"] + "</h5>");
-        $("#articleResult").html("<p><i>" + article["journal_id"] + "</i>" + //needs to change this to journal name
-                                    "<strong> " + article["year"] + "</strong>" + //needs to not show when the attribute is empty
-                                    "<i> " + article["vol"] + "</i>" +
-                                    " (" + article["issue"] + ")" +
-                                    " p" + article["start_page"])
-        console.log(article);
+        $("#articleResult").html(articleListEntry(article))
+
       })
     });
   });
