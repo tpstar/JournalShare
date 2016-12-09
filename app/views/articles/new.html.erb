@@ -16,7 +16,7 @@
         $("#articleTitle").html("<h4>Thank you. You posted the article ; </h4><h5>" + article["title"] +
                                 "  doi:" + article["doi"] + "</h5>");
         $("#articleResult").html(articleListEntry(article))
-
+        $('#article_form')[0].reset();
       })
     });
   });
