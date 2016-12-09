@@ -9,7 +9,7 @@
   <p><%= link_to "#{a.title}", user_article_path(current_user, a) %>
     <a href="#" class="js-more" data-id="<%=a.id%>"><font color="orange">More...</font></a>
   </p>
-  <p id="articleInfo"></p>
+  <p id="articleInfo-<%=a.id%>"></p>
 <% end %>
 <br>
 
@@ -17,10 +17,9 @@
 
 $(function() {
   $(".js-more").on("click", function(event){
-    var id = parseInt($(".js-more").attr("data-id"));
-    console.log(id);
-    $.get("/articles/" + id + ".json", function(article) {
-      $("#articleInfo").html( articleListEntry(article) );
+    var articleId = $(this).attr("data-id");
+    $.get("/articles/" + articleId + ".json", function(article) {
+      $("#articleInfo-" + articleId).html( articleListEntry(article) );
     });
     event.preventDefault();
   });
