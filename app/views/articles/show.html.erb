@@ -19,7 +19,7 @@
 
 <p id="articleUser">
   <% if @article.users.any? %>
-    posted by <%= @article.users.last.first_name%> <%= @article.users.last.last_name%>
+    posted by <span id="author"><%= @article.users.last.first_name%> <%= @article.users.last.last_name%></span>
   <% end %>
 </p>
 
@@ -45,7 +45,9 @@ $(function() {
       $(".articleTitle").text(article["title"]);
       $("#articleInfo").html( articleListEntry(article) );
       $("#articleDOI").text(article["doi"]);
-      $("#articleUser").text(article["users"]);
+      var author = article["users"][article["users"].length - 1];
+      $("#author").text(author["first_name"] + " " + author["last_name"]);
+      console.log(author["first_name"] + " " + author["last_name"]);
       $(".js-next").attr("data-id", article["id"]);
     });
     event.preventDefault();
