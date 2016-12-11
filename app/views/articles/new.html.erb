@@ -13,7 +13,10 @@
       var values = $(this).serialize();
       var posting = $.post('/articles', values);
       posting.done(function(article) {
+        var author = article["users"][article["users"].length - 1];
+
         $("#articleTitle").html("<h4>Thank you. You posted the article ; </h4><h5>" + article["title"] +
+                                " by " + author["first_name"] + " " + author["last_name"] +
                                 "  doi:" + article["doi"] + "</h5>");
         $("#articleResult").html(articleListEntry(article))
         $('#article_form')[0].reset();
