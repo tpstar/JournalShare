@@ -13,11 +13,11 @@
   <%= "p#{@article.start_page}" if @article.start_page %>
 </p>
 
-<p>
+<p id="articleDOI">
   DOI: <%= @article.doi %>
 </p>
 
-<p>
+<p id="articleUser">
   <% if @article.users.any? %>
     posted by <%= @article.users.last.first_name%> <%= @article.users.last.last_name%>
   <% end %>
@@ -43,8 +43,9 @@ $(function() {
     var nextId = parseInt($(".js-next").attr("data-id")) + 1;
     $.get("/articles/" + nextId + ".json", function(article) {
       $(".articleTitle").text(article["title"]);
-
       $("#articleInfo").html( articleListEntry(article) );
+      $("#articleDOI").text(article["doi"]);
+      $("#articleUser").text(article["users"]);
       $(".js-next").attr("data-id", article["id"]);
     });
     event.preventDefault();
