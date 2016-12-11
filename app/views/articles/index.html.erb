@@ -21,7 +21,6 @@ $(function() {
     $.get("/articles/" + articleId + ".json", function(article) {
       $("#articleInfo-" + articleId).html( articleListEntry(article) );
     });
-    $('#article_form')[0].reset();
     event.preventDefault();
   });
 });
