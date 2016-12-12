@@ -25,9 +25,9 @@
 
 <p id="currentUser">
   <% if @article.users.include?(current_user) %>
-    <font color="blue"><%= "You are the author of the article" %></font>
+    <font color="blue">You are the author of the article</font>
   <% elsif @article.demands.include?(Demand.find_by(reader_id: current_user.id)) %>
-    <font color="red"><%= "You have already requested the article" %></font>
+    <font color="red">You have already requested the article></font>
   <% else %>
     <%= render partial: 'request_form', locals: {article: @article} %>
   <% end %>
@@ -44,7 +44,7 @@ $(function() {
     $.get("/articles/" + nextId + ".json", function(article) {
       $(".articleTitle").text(article["title"]);
       $("#articleInfo").html( articleListEntry(article) );
-      $("#articleDOI").text(article["doi"]);
+      $("#articleDOI").text("DOI: " + article["doi"]);
       $("#author").text(byAuthor(article));
       $.get('/present_user', function(data) {
         var currentUserId = data["id"];
@@ -57,14 +57,48 @@ $(function() {
         if(userIds.includes(currentUserId)) {
           $("#currentUser").html("<font color='blue'>You are the author of the article</font>");
         } else {
-          $("#currentUser").html("<font color='red'>I need to put button here to request the article</font>");
+          $("#currentUser").html(" <button type='button' class='btn btn-primary'>Request this Article from its Author</button> ");
+          requestArticle();
         };
       });
       $(".js-next").attr("data-id", article["id"]);
     });
     event.preventDefault();
-
   });
+
 });
 
+function requestArticle() {
+  var form = $('<form>/</form>');
+  form.attr("method", "post");
+  form.attr("action", "/demands");
+
+  var hiddenValues = {author_id: }
+    //prevent form from submitting the default way
+    event.preventDefault();
+    console.log("button pressed");
+    // var values = $(this).serialize();
+    // var posting = $.post('/demands', values);
+    // posting.done(function(article) {
+    //   $("#articleTitle").html("<h4>Thank you. You posted the article ; </h4><h5>" + article["title"] +
+    //                           byAuthor(article) +
+    //                           "  doi:" + article["doi"] + "</h5>");
+    //   $("#articleResult").html(articleListEntry(article))
+    // })
+
+}
 </script>
+
+<%= form_for(article.demands.build) do |f| %>
+  <div><%= hidden_field_tag :author_id, article.users.last.id %></div>
+  <div><%= hidden_field_tag :reader_id, current_user.id %></div>
+  <div><%= hidden_field_tag :article_id, article.id %></div>
+  <%= f.submit "Request this Article from its Author", class: "btn btn-primary" %>
+<% end %>
+
+
+<form id="new_demand" class="new_demand" action="/demands" method="post">
+  <input type="hidden" name="authenticity_token" value="hMHtcN5jb/w3CfaT5n35hUwZgIQrLwo8R3Fy7IOADiTrDy3c8HKx7wDpvfxoelQ+lcyDH0lE42GwqqQq14Hdvg==">
+
+  <input type="submit" name="commit" class="btn btn-primary" value="Request this Article from its Author" data-disable-with="Request this Article from its Author">
+</form>
