@@ -47,7 +47,6 @@ $(function() {
       $("#articleDOI").text(article["doi"]);
       var author = article["users"][article["users"].length - 1];
       $("#author").text(author["first_name"] + " " + author["last_name"]);
-      // console.log(author["first_name"] + " " + author["last_name"]);
       $(".js-next").attr("data-id", article["id"]);
     });
     event.preventDefault();
