@@ -7,3 +7,9 @@ function articleListEntry(article) {
   if (article["start_page"]) {articleInfo += " p" + article["start_page"]}
   return articleInfo;
 }
+
+function byAuthor(article) {
+  var author = article["users"][article["users"].length - 1];
+  var authorString = " by " + author["first_name"] + " " + author["last_name"];
+  return authorString;
+}

@@ -20,9 +20,7 @@ $(function() {
   $(".js-more").on("click", function(event){
     var articleId = $(this).attr("data-id");
     $.get("/articles/" + articleId + ".json", function(article) {
-      var author = article["users"][article["users"].length - 1];
-      $("#articleInfo-" + articleId).html( articleListEntry(article) +
-                                           " by " + author["first_name"] + " " + author["last_name"]);
+      $("#articleInfo-" + articleId).html( articleListEntry(article) + byAuthor(article) );
     });
     event.preventDefault();
   });
