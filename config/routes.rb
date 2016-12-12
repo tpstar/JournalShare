@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   resources :articles, :journals
   resources :searches
   resources :demands
+
+  get 'present_user', to: 'users#present_user'
   #get '/users/:id', to: 'authors#show'
   # get '/auth/:provider/callback', to: 'sessions#create'
 end

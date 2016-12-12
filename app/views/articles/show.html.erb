@@ -49,6 +49,9 @@ $(function() {
       $(".js-next").attr("data-id", article["id"]);
     });
     event.preventDefault();
+    $.get('/present_user', function(data) {
+      console.log(data["id"]);
+    });
   });
 });
 

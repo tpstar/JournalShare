@@ -13,4 +13,8 @@ class UsersController < ApplicationController
     end
   end
 
+  def present_user
+    render json: {id: current_user.id }
+  end
+
 end
