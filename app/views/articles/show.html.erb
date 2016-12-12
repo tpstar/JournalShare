@@ -23,7 +23,7 @@
   <% end %>
 </p>
 
-<p>
+<p id="currentUser">
   <% if @article.users.include?(current_user) %>
     <font color="blue"><%= "You are the author of the article" %></font>
   <% elsif @article.demands.include?(Demand.find_by(reader_id: current_user.id)) %>
@@ -46,12 +46,24 @@ $(function() {
       $("#articleInfo").html( articleListEntry(article) );
       $("#articleDOI").text(article["doi"]);
       $("#author").text(byAuthor(article));
+      $.get('/present_user', function(data) {
+        var currentUserId = data["id"];
+        var authors = article["users"];
+        var userIds = [];
+        authors.forEach(function(el) {
+          userIds.push(el.id);
+        })
+
+        if(userIds.includes(currentUserId)) {
+          $("#currentUser").html("<font color='blue'>You are the author of the article</font>");
+        } else {
+          $("#currentUser").html("<font color='red'>I need to put button here to request the article</font>");
+        };
+      });
       $(".js-next").attr("data-id", article["id"]);
     });
     event.preventDefault();
-    $.get('/present_user', function(data) {
-      console.log(data["id"]);
-    });
+
   });
 });
 
