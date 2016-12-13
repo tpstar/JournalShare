@@ -72,6 +72,10 @@ function requestArticle() {
   form.attr("method", "post");
   form.attr("action", "/demands");
 
+  form.append("<input name='utf8' value='✓' type='hidden'>")
+  form.append("<input type='hidden' name='authenticity_token' value=" + $('meta[name=csrf-token]').attr('content') + "/>")
+  form.append("<input class='btn btn-primary' name='commit' value='Request this Article from its Author' type='submit'>");
+
   var hiddenValues = {author_id: 1, reader_id: 2, article_id: 1 };
 
   $.each(hiddenValues, function(key, value) {
@@ -83,8 +87,7 @@ function requestArticle() {
 
     form.append(field);
   });
-  form.append("<input type='hidden' name='authenticity_token' value={$('meta[name=csrf-token]').attr('content')}/>")
-  form.append("<input class='btn btn-primary' name='commit' value='Request this Article from its Author' type='submit'>");
+
   $("#currentUser").html(form);
   // formSubmit();
 
@@ -96,10 +99,10 @@ function formSubmit() {
     //prevent form from submitting the default way
     event.preventDefault();
     var values = $(this).serialize();
-
+      console.log("got here");
     var posting = $.post('/demands', values);
     posting.done(function(demand) {
-      console.log("got here");
+
     })
   });
 }
