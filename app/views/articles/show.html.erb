@@ -32,6 +32,8 @@
     <%= render partial: 'request_form', locals: {article: @article} %>
   <% end %>
 </p>
+
+<p id="articleRequestNotice"></p>
 <br>
 
 <a href="#" class="js-next" data-id="<%=@article.id%>">Next Article</a>
@@ -61,13 +63,33 @@ $(function() {
           $.get("/articles/" + nextId, function(data) {
            $("#currentUser").html($(data).find('form'));
           });
+          // request article using Ajax generated form
+          requestArticle();
         };
       });
       $(".js-next").attr("data-id", article["id"]);
     });
     event.preventDefault();
   });
-
+  //request article from HTML article show page
+  requestArticle();
 });
+
+function requestArticle() {
+  $('form').submit(function(event) {
+    //prevent form from submitting the default way
+    event.preventDefault();
+
+    var values = $(this).serialize();
+    $.post('/demands', values, function(){
+      event.preventDefault();
+      console.log("Hooray");
+    });
+    // posting.done(function(notice) {
+
+      // $("#articleRequestNotice").text("<font color='blue'>Your request has been sent to the author.</font>");
+    // });
+  });
+}
 
 </script>
