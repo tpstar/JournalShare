@@ -38,6 +38,8 @@ class ArticlesController < ApplicationController
     end
   end
 
+  private
+
   def article_params
     params.require(:article).permit(:doi, :title, :year, :vol, :issue, :start_page, :journal_attributes => [:id, :name])
   end

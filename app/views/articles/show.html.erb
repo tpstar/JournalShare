@@ -57,7 +57,13 @@ $(function() {
         if(userIds.includes(currentUserId)) {
           $("#currentUser").html("<font color='blue'>You are the author of the article</font>");
         } else {
-          requestArticle();
+          $.get("/articles/" + nextId, function(data) {
+
+            console.log(data)
+            // $("#currentUser").html( html.getElementsByTagName("FORM") );
+            })
+          // $("#currentUser").html("<button class='btn btn-primary'>Request this Article from its Author</button>")
+          // requestArticle();
         };
       });
       $(".js-next").attr("data-id", article["id"]);
@@ -72,11 +78,13 @@ function requestArticle() {
   form.attr("method", "post");
   form.attr("action", "/demands");
 
-  form.append("<input name='utf8' value='✓' type='hidden'>")
-  form.append("<input type='hidden' name='authenticity_token' value=" + $('meta[name=csrf-token]').attr('content') + "/>")
+  // form.append("<input name='utf8' value='✓' type='hidden'>")
+  // form.append("<input type='hidden' name='authenticity_token' value=" + $('meta[name=csrf-token]').attr('content') + "/>")
   form.append("<input class='btn btn-primary' name='commit' value='Request this Article from its Author' type='submit'>");
 
-  var hiddenValues = {author_id: 1, reader_id: 2, article_id: 1 };
+  // console.log($('meta[name=csrf-token]').attr('content'));
+
+  var hiddenValues = {"author_id": "1", "reader_id": "2", "article_id": "3" };
 
   $.each(hiddenValues, function(key, value) {
     var field = $('<input></input>');
@@ -89,22 +97,33 @@ function requestArticle() {
   });
 
   $("#currentUser").html(form);
-  // formSubmit();
+  console.log(form)
 
-  form.submit();
+  // form.submit();
 }
 
 function formSubmit() {
   $('form').submit(function(event) {
     //prevent form from submitting the default way
     event.preventDefault();
-    var values = $(this).serialize();
-      console.log("got here");
+    var hiddenValues = {author_id: 1, reader_id: 2, article_id: 1 };
+    var values = $(hiddenValues).serialize();
     var posting = $.post('/demands', values);
     posting.done(function(demand) {
-
+      console.log(demand);
     })
   });
 }
+
+// function requestArticle() {
+//   $(".btn").on("click", function(){
+//     var hiddenValues = {author_id: 1, reader_id: 2, article_id: 1 };
+//     var values = $(hiddenValues).serialize();
+//     var posting = $.post('/demands', values);
+//     posting.done(function(demand) {
+//       console.log(demand);
+//     })
+//   });
+// }
 
 </script>

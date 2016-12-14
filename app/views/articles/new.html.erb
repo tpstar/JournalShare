@@ -11,7 +11,7 @@
       //prevent form from submitting the default way
       event.preventDefault();
       var values = $(this).serialize();
-      console.log(values);
+      // console.log($this);
       var posting = $.post('/articles', values);
       posting.done(function(article) {
         $("#articleTitle").html("<h4>Thank you. You posted the article ; </h4><h5>" + article["title"] +
