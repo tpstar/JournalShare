@@ -7,10 +7,12 @@ class DemandsController < ApplicationController
     @demand.article = Article.find(params[:article_id])
     if @demand.save
       # send a request to author
-      # flash[:notice] = "Your request has been sent to the author."
+      flash[:notice] = "Your request has been sent to the author."
       # redirect_to root_path
-      # render @demand.article
-      render layout: false
+      respond_to do |format|
+        format.html { redirect_to @demand.article }
+        format.json { render json: {"notification": "Your request has been sent to the author."} }
+      end
     else
       flash[:notice] = "We could not complete your request."
       redirect_to root_path

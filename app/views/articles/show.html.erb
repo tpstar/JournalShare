@@ -27,20 +27,26 @@
   <% if @article.users.include?(current_user) %>
     <font color="blue">You are the author of the article</font>
   <% elsif @article.demands.include?(Demand.find_by(reader_id: current_user.id)) %>
-    <font color="red">You have already requested the article></font>
+    <font color="red">You have already requested the article.</font>
   <% else %>
     <%= render partial: 'request_form', locals: {article: @article} %>
   <% end %>
 </p>
 
-<p id="articleRequestNotice"></p>
-<br>
+<p id="requestNotification">
+<p>
 
 <a href="#" class="js-next" data-id="<%=@article.id%>">Next Article</a>
 
 <script type="text/javascript" charset="utf-8">
 
 $(function() {
+  nextArticle();
+  requestArticle();
+});
+
+
+function nextArticle() {
   $(".js-next").on("click", function(event){
     var nextId = parseInt($(".js-next").attr("data-id")) + 1;
     $.get("/articles/" + nextId + ".json", function(article) {
@@ -63,32 +69,23 @@ $(function() {
           $.get("/articles/" + nextId, function(data) {
            $("#currentUser").html($(data).find('form'));
           });
-          // request article using Ajax generated form
-          requestArticle();
+
         };
       });
       $(".js-next").attr("data-id", article["id"]);
     });
     event.preventDefault();
   });
-  //request article from HTML article show page
-  requestArticle();
-});
+}
 
 function requestArticle() {
-  $('form').submit(function(event) {
+  $('#new_demand').submit(function(event) {
     //prevent form from submitting the default way
     event.preventDefault();
-
     var values = $(this).serialize();
-    $.post('/demands', values, function(){
-      event.preventDefault();
-      console.log("Hooray");
+    $.post(this.action, values, function(data){
+      $("#requestNotification").html("<font color='green'>" + data.notification + "</font>")
     });
-    // posting.done(function(notice) {
-
-      // $("#articleRequestNotice").text("<font color='blue'>Your request has been sent to the author.</font>");
-    // });
   });
 }
 
