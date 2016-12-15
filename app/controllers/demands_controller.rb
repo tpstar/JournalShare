@@ -8,11 +8,9 @@ class DemandsController < ApplicationController
     if @demand.save
       # send a request to author
       flash[:notice] = "Your request has been sent to the author."
-      # redirect_to root_path
-      respond_to do |format|
-        format.html { redirect_to @demand.article }
-        format.json { render json: {"notification": "Your request has been sent to the author."} }
-      end
+
+        render json: {"notification": "Your request has been sent to the author."}
+
     else
       flash[:notice] = "We could not complete your request."
       redirect_to root_path

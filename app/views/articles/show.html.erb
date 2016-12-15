@@ -32,7 +32,9 @@
     <%= render partial: 'request_form', locals: {article: @article} %>
   <% end %>
 </p>
-
+<div id="anotherForm">
+  <%= render partial: 'another_form', locals: {article: @article} %>
+</div>
 <p id="requestNotification">
 <p>
 
@@ -41,6 +43,7 @@
 <script type="text/javascript" charset="utf-8">
 
 $(function() {
+  initializePage();
   nextArticle();
   requestArticle();
 });
@@ -54,32 +57,16 @@ function nextArticle() {
       $("#articleInfo").html( articleListEntry(article) );
       $("#articleDOI").text("DOI: " + article["doi"]);
       $("#author").text(byAuthor(article));
-      $.get('/present_user', function(data) {
-        var currentUserId = data["id"];
-        var authors = article["users"];
-        var userIds = [];
-        authors.forEach(function(el) {
-          userIds.push(el.id);
-        })
 
-        if(userIds.includes(currentUserId)) {
-          $("#currentUser").html("<font color='blue'>You are the author of the article</font>");
-        } else {
-          // display article request form
-          $.get("/articles/" + nextId, function(data) {
-           $("#currentUser").html($(data).find('form'));
-          });
-
-        };
-      });
       $(".js-next").attr("data-id", article["id"]);
+      initializePage();
     });
     event.preventDefault();
   });
 }
 
 function requestArticle() {
-  $('#new_demand').submit(function(event) {
+  $('form').submit(function(event) {
     //prevent form from submitting the default way
     event.preventDefault();
     var values = $(this).serialize();
@@ -87,6 +74,42 @@ function requestArticle() {
       $("#requestNotification").html("<font color='green'>" + data.notification + "</font>")
     });
   });
+}
+
+function initializePage() {
+  var userId = parseInt($(".js-next").attr("data-id"));
+  var article = getArticleInfo(userId);
+
+
+  console.log(article.id);
+  // $.get('/present_user', function(data) {
+  //   var currentUserId = data["id"];
+  //   var authors = article["users"];
+  //   var userIds = [];
+  //   authors.forEach(function(author) {
+  //     userIds.push(author.id);
+  //   })
+  //
+  //   if(userIds.includes(currentUserId)) {
+  //     $("#currentUser").html("<font color='blue'>You are the author of the article</font>");
+  //     $("#article_request_form").hide();
+  //   } else {
+  //     // display article request form
+  //
+  //     // $.get("/articles/" + nextId, function(data) {
+  //     //  $("#currentUser").html($(data).find('form'));
+  //     // });
+  //
+  //     $("#currentUser").hide();
+
+  //   };
+  // });
+}
+
+function getArticleInfo(userId) {
+  $.get("/articles/" + userId + ".json", function(article) {
+    return article;
+  })
 }
 
 </script>
