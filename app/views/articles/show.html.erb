@@ -59,6 +59,7 @@ function nextArticle() {
       $.get('/present_user', function(data) {
         var currentUserId = data["id"];
         var authors = article["users"];
+        console.log(authors);
         var userIds = [];
         authors.forEach(function(el) {
           userIds.push(el.id);
