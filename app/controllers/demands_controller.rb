@@ -19,6 +19,10 @@ class DemandsController < ApplicationController
 
   def show
     @demand = Demand.find(params[:id])
+    respond_to do |format|
+      format.html { render :show }
+      format.json { render json: @demand }
+    end
   end
 
   def destroy

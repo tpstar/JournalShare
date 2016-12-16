@@ -74,7 +74,7 @@ function requestArticle() {
   });
 }
 
-function initializePage() {
+function initializePage() {  //hide article request if current user is the author of the
   var articleId = parseInt($(".js-next").attr("data-id"));
 
   $.get("/articles/" + articleId + ".json", function(article) {
@@ -87,9 +87,12 @@ function initializePage() {
       var currentUserId = data["id"];
 
       if(userIds.includes(currentUserId)) {
+        // console.log("current user is author")
         $("#currentUser").html("<font color='blue'>You are the author of the article</font>");
+        $("#currentUser").show();
         $("#article_request_form").hide(); // hide article request (demand) form if the author is current_user
       } else {
+        // console.log("current user is not author")
         $("#currentUser").hide();
         $("#article_request_form").show(); // show article request (demand) form if the author is not current_user
       }
@@ -98,37 +101,5 @@ function initializePage() {
   });
 }
 
-
-  // $.get('/present_user', function(data) {
-  //   var currentUserId = data["id"];
-  //   var authors = article["users"];
-  //   var userIds = [];
-  //   authors.forEach(function(author) {
-  //     userIds.push(author.id);
-  //   })
-  //
-  //   if(userIds.includes(currentUserId)) {
-  //     $("#currentUser").html("<font color='blue'>You are the author of the article</font>");
-  //     $("#article_request_form").hide();
-  //   } else {
-  //     // display article request form
-  //
-  //     // $.get("/articles/" + nextId, function(data) {
-  //     //  $("#currentUser").html($(data).find('form'));
-  //     // });
-  //
-  //     $("#currentUser").hide();
-
-  //   };
-  // });
-
-
-function getArticleInfo(userId) {
-  var articleId;
-  $.get("/articles/" + userId + ".json", function(article) {
-    articleId = article.id;
-  });
-  return articleId;
-}
 
 </script>
