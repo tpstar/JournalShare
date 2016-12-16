@@ -18,6 +18,15 @@ class Article < ApplicationRecord
   #   self.try(:journal).try(:name)
   # end
 
+  def readers
+    readers = []
+    article_demands = self.demands
+    article_demands.each do |demand|
+      readers << demand.reader
+    end
+    readers
+  end
+
   def journal_attributes=(journal_attributes)
     if journal_attributes[:name] != ""
       self.journal = Journal.find_or_create_by(name: journal_attributes[:name])

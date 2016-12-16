@@ -23,22 +23,30 @@
   <% end %>
 </p>
 
-<p id="currentUser">
+<div id="currentUser">
   <% if @article.users.include?(current_user) %>
     <font color="blue">You are the author of the article</font>
-  <% elsif @article.demands.include?(Demand.find_by(reader_id: current_user.id)) %>
-    <font color="red">You have already requested the article></font>
+  <% elsif flash[:message] %>
+    <font color='green'>Your request has been sent to the author.</font>
+  <% elsif @article.readers.include?(current_user) %>
+    <font color="orange">You have already requested the article.</font>
   <% else %>
-    <%= render partial: 'request_form', locals: {article: @article} %>
+    <div id=requestForm>
+      <%= render partial: 'request_form', locals: {article: @article} %>
+    </div>
   <% end %>
-</p>
-<br>
+</div>
+
+<p id="requestNotification">
+<p>
 
 <a href="#" class="js-next" data-id="<%=@article.id%>">Next Article</a>
 
 <script type="text/javascript" charset="utf-8">
-
 $(function() {
+  nextArticle();
+});
+function nextArticle() {
   $(".js-next").on("click", function(event){
     var nextId = parseInt($(".js-next").attr("data-id")) + 1;
     $.get("/articles/" + nextId + ".json", function(article) {
@@ -53,13 +61,25 @@ $(function() {
         authors.forEach(function(el) {
           userIds.push(el.id);
         })
-
         if(userIds.includes(currentUserId)) {
           $("#currentUser").html("<font color='blue'>You are the author of the article</font>");
         } else {
+
           // display article request form
           $.get("/articles/" + nextId, function(data) {
            $("#currentUser").html($(data).find('form'));
+
+           //request article using ajax generated article request form
+           $('#new_demand').submit(function(event) {
+             //prevent form from submitting the default way
+             event.preventDefault();
+             var values = $(this).serialize();
+             $.post(this.action, values, function(data){
+               $("#requestNotification").html("<font color='green'>" + data.notification + "</font>")
+             });
+           });
+           // end of the request article
+
           });
         };
       });
@@ -67,7 +87,6 @@ $(function() {
     });
     event.preventDefault();
   });
-
-});
+}
 
 </script>
