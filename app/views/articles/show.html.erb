@@ -28,8 +28,6 @@
     <font color="blue">You are the author of the article</font>
   <% elsif @article.demands.include?(Demand.find_by(reader_id: current_user.id)) %>
     <font color="red">You have already requested the article.</font>
-  <% else %>
-    <%= render partial: 'request_form', locals: {article: @article} %>
   <% end %>
 </p>
 <div id="anotherForm">
@@ -77,11 +75,30 @@ function requestArticle() {
 }
 
 function initializePage() {
-  var userId = parseInt($(".js-next").attr("data-id"));
-  var article = getArticleInfo(userId);
+  var articleId = parseInt($(".js-next").attr("data-id"));
+
+  $.get("/articles/" + articleId + ".json", function(article) {
+    var userIds = [];
+    var authors = article["users"];
+    authors.forEach(function(author) {
+      userIds.push(author.id);
+    });
+    $.get('/present_user', function(data) {
+      var currentUserId = data["id"];
+
+      if(userIds.includes(currentUserId)) {
+        $("#currentUser").html("<font color='blue'>You are the author of the article</font>");
+        $("#article_request_form").hide(); // hide article request (demand) form if the author is current_user
+      } else {
+        $("#currentUser").hide();
+        $("#article_request_form").show(); // show article request (demand) form if the author is not current_user
+      }
+
+    });
+  });
+}
 
 
-  console.log(article.id);
   // $.get('/present_user', function(data) {
   //   var currentUserId = data["id"];
   //   var authors = article["users"];
@@ -104,12 +121,14 @@ function initializePage() {
 
   //   };
   // });
-}
+
 
 function getArticleInfo(userId) {
+  var articleId;
   $.get("/articles/" + userId + ".json", function(article) {
-    return article;
-  })
+    articleId = article.id;
+  });
+  return articleId;
 }
 
 </script>
