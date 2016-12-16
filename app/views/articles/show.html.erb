@@ -26,6 +26,7 @@
 <div id="currentUser">
   <% if @article.users.include?(current_user) %>
     <font color="blue">You are the author of the article</font>
+
   <% elsif flash[:message] %>
     <font color='green'>Your request has been sent to the author.</font>
   <% elsif @article.readers.include?(current_user) %>
@@ -46,6 +47,7 @@
 $(function() {
   nextArticle();
 });
+
 function nextArticle() {
   $(".js-next").on("click", function(event){
     var nextId = parseInt($(".js-next").attr("data-id")) + 1;
@@ -90,5 +92,6 @@ function nextArticle() {
     event.preventDefault();
   });
 }
+
 
 </script>
