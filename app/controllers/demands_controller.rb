@@ -11,7 +11,7 @@ class DemandsController < ApplicationController
       flash[:message] = "Your request has been sent to the author."
       @article = @demand.article
       respond_to do |format|
-        format.html { render 'articles/show', article: @article }
+        format.html { redirect_to @article } #render 'articles/show', article: @article }
         format.json { render json: {"notification": "Your request has been sent to the author."} }
       end
 
