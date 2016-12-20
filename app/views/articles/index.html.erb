@@ -1,12 +1,13 @@
-<h3> Articles
-
-  <% if @author %>
+<% if @author %>
+  <h3> Articles
     <span id='author' data-id="<%=@author.id%>">
       <%= " by " + @author.first_name %> <%= @author.last_name %>
     </span>
-  <% end %>
+  </h3>
+  <%= render :partial => 'form', :locals => {article: @article} %>
+<% end %>
 
-</h3>
+
 
 <br>
 <div class="articles">

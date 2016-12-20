@@ -23,6 +23,9 @@ class ArticlesController < ApplicationController
 
   def index
     if params[:user_id]
+      @article = Article.new
+      @article.build_journal
+      
       @author =  User.find(params[:user_id])
       @articles = @author.articles
       respond_to do |format|
