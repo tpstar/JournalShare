@@ -1,0 +1,49 @@
+<h4>
+  Articles
+</h4>
+
+<div class="articles">
+  <h3 class="loading">...loading</h3>
+</div>
+
+
+<script type="text/javascript" charset="utf-8">
+
+$(function() {
+  $.get("/articles.json", function(articles) {
+    // we want to remove the h3 tag with the class loading
+    $('.loading').remove();
+    // we want to find the DOM element for the div with the class articles
+    var div = $('.articles')
+    // we want to iterate over the articles
+    for (var i = 0; i < articles.length; i++) {
+
+      // we want to append each article title to the DOM inside of the div with class aritcles
+      div.append("<p>DOI"  + articles[i].title + "</p>")
+    }
+  });
+});
+
+  $(".js-more").on("click", function(event){
+    var articleId = $(this).attr("data-id");
+    $.get("/articles/" + articleId + ".json", function(article) {
+      $("#articleInfo-" + articleId).html( articleListEntry(article) + byAuthor(article) );
+    });
+    event.preventDefault();
+  });
+});
+
+</script>
+
+
+
+<div id='format'>
+  <% @articles.recent.each do |a| %>
+    <p>DOI: <%= a.doi %> </p>
+    <p><%= link_to "#{a.title}", user_article_path(current_user, a) %>
+      <a href="#" class="js-more" data-id="<%=a.id%>"><font color="orange">More...</font></a>
+    </p>
+    <p id="articleInfo-<%=a.id%>"></p>
+    <br>
+  <% end %>
+</div>

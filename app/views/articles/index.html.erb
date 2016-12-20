@@ -1,29 +1,60 @@
-<h4>
-  Articles
+<h3> Articles
+
   <% if @author %>
-    <%= "by " + @author.first_name %> <%= @author.last_name %>
+    <span id='author' data-id="<%=@author.id%>">
+      <%= " by " + @author.first_name %> <%= @author.last_name %>
+    </span>
   <% end %>
-</h4>
-<% @articles.recent.each do |a| %>
-  <p>DOI: <%= a.doi %> </p>
-  <p><%= link_to "#{a.title}", user_article_path(current_user, a) %>
-    <a href="#" class="js-more" data-id="<%=a.id%>"><font color="orange">More...</font></a>
-  </p>
-  <p id="articleInfo-<%=a.id%>"></p>
-  <br>
-<% end %>
+
+</h3>
+
+<br>
+<div class="articles">
+  <h4 class="loading">...loading</h4>
+</div>
+
+
+
 <br>
 
 <script type="text/javascript" charset="utf-8">
 
 $(function() {
-  $(".js-more").on("click", function(event){
-    var articleId = $(this).attr("data-id");
-    $.get("/articles/" + articleId + ".json", function(article) {
-      $("#articleInfo-" + articleId).html( articleListEntry(article) + byAuthor(article) );
+  var url;
+  var userArticle = document.getElementById("author") // check if the article path is netsted route
+  if (userArticle === null) {
+    url = "/articles.json"
+  } else {
+    var userId = $('#author').attr("data-id");
+    url = "/users/" + userId + "/articles.json";
+  }
+
+  $.get(url, function(articles) {
+    // we want to remove the h3 tag with the class loading
+    $('.loading').remove();
+    // we want to find the DOM element for the div with the class articles
+    var div = $('.articles')
+    // we want to iterate over the articles
+    for (var i = 0; i < articles.length; i++) {
+
+      // we want to append each article title to the DOM inside of the div with class aritcles
+      div.append("<p>DOI: "  + articles[i].doi + "</p>");
+      div.append("<p><a href='/articles/" + articles[i].id + "'>" + articles[i].title + "</a></p>")
+      div.append("<p><a href='#' class='js-more' data-id='" + articles[i].id + "'><font color='orange'>More...</font></a><p>")
+      div.append("<p id='articleInfo-" + articles[i].id + "'></p><br>")
+    }
+    $(".js-more").on("click", function(event){
+      var articleId = $(this).attr("data-id");
+      console.log($(this));
+      $(this).hide();
+      $.get("/articles/" + articleId + ".json", function(article) {
+        $("#articleInfo-" + articleId).html( articleListEntry(article) + byAuthor(article) );
+      });
+      event.preventDefault();
     });
-    event.preventDefault();
   });
+
+
 });
 
 </script>

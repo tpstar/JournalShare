@@ -25,8 +25,16 @@ class ArticlesController < ApplicationController
     if params[:user_id]
       @author =  User.find(params[:user_id])
       @articles = @author.articles
+      respond_to do |format|
+        format.html { render :index }
+        format.json { render json: @articles.recent }
+      end
     else
       @articles = Article.all
+      respond_to do |format|
+        format.html { render :index }
+        format.json { render json: @articles.recent }
+      end
     end
   end
 
