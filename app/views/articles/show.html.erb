@@ -52,10 +52,11 @@ function nextArticle() {
   $(".js-next").on("click", function(event){
     var nextId = parseInt($(".js-next").attr("data-id")) + 1;
     $.get("/articles/" + nextId + ".json", function(article) {
+      var entry = new ListEntry(article);
       $(".articleTitle").text(article["title"]);
-      $("#articleInfo").html( articleListEntry(article) );
+      $("#articleInfo").html( entry.listArticle() );
       $("#articleDOI").text("DOI: " + article["doi"]);
-      $("#author").text(byAuthor(article));
+      $("#author").text(entry.byAuthor());
       $.get('/present_user', function(data) {
         var currentUserId = data["id"];
         var authors = article["users"];

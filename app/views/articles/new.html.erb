@@ -14,10 +14,11 @@
       // console.log($this);
       var posting = $.post('/articles', values);
       posting.done(function(article) {
+        var entry = new ListEntry(article);
         $("#articleTitle").html("<h4>Thank you. You posted the article ; </h4><h5>" + article["title"] +
-                                byAuthor(article) +
+                                entry.byAuthor() +
                                 "  doi:" + article["doi"] + "</h5>");
-        $("#articleResult").html(articleListEntry(article))
+        $("#articleResult").html(entry.listArticle())
         // reset the form
         $('#article_form')[0].reset();
         // reset the button
