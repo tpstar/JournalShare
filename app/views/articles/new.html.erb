@@ -18,7 +18,10 @@
                                 byAuthor(article) +
                                 "  doi:" + article["doi"] + "</h5>");
         $("#articleResult").html(articleListEntry(article))
+        // reset the form
         $('#article_form')[0].reset();
+        // reset the button
+        $('input[data-disable-with]').removeAttr("disabled");
       })
     });
   });

@@ -23,9 +23,10 @@ class ArticlesController < ApplicationController
 
   def index
     if params[:user_id]
-      @article = Article.new
-      @article.build_journal
-      
+      @article = Article.new #for the form in the index page
+      @article.build_journal #for the form in the index page
+      @journals = Journal.order("name ASC") #for the form in the index page
+
       @author =  User.find(params[:user_id])
       @articles = @author.articles
       respond_to do |format|

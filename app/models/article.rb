@@ -30,7 +30,7 @@ class Article < ApplicationRecord
   def journal_attributes=(journal_attributes)
     if journal_attributes[:name] != ""
       self.journal = Journal.find_or_create_by(name: journal_attributes[:name])
-    else
+    elsif journal_attributes[:id] != ""
       self.journal = Journal.find(journal_attributes[:id])
     end
   end
