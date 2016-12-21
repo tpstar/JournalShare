@@ -58,13 +58,12 @@ $(function() {
   $("#article_form").on("submit", function(event){
     url = this.action;
     var values = $(this).serialize();
-    console.log(this);
     $.post(url, values).done(function(article){
-      $('.articles').append("<p>DOI: "  + article.doi + "</p>");
-      $('.articles').append("<p><a href='/articles/" + article.id + "'>" + article.title + "</a></p>")
-      $('.articles').append("<p><a href='#' class='js-more' data-id='" + article.id + "'><font color='orange'>More...</font></a><p>")
-      $('.articles').append("<p id='articleInfo-" + article.id + "'></p><br>")
-      // reset the form
+      var articleHtml = "<p>DOI: "  + article.doi + "</p>" +
+                        "<p><a href='/articles/" + article.id + "'>" + article.title + "</a></p>" +
+                        "<p><a href='#' class='js-more' data-id='" + article.id + "'><font color='orange'>More...</font></a><p>" +
+                        "<p id='articleInfo-" + article.id + "'></p><br>";
+      $('.articles').prepend(articleHtml);
       $('#article_form')[0].reset();
       // reset the button
       $('input[data-disable-with]').removeAttr("disabled");
