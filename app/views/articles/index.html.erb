@@ -30,23 +30,47 @@ $(function() {
     url = "/users/" + userId + "/articles.json";
   }
 
-  $.get(url, function(articles) {
-    // we want to remove the h3 tag with the class loading
-    $('.loading').remove();
-    // we want to find the DOM element for the div with the class articles
-    var div = $('.articles')
-    // we want to iterate over the articles
-    for (var i = 0; i < articles.length; i++) {
+  fetch(url)
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(json) {
+      appendArticleJSON(json);
+    })
+    .then(addEventListeners)
+    .catch(function(error) {
+      console.log('Error!: ', error)
+    })
 
-      // we want to append each article title to the DOM inside of the div with class aritcles
-      div.append("<p>DOI: "  + articles[i].doi + "</p>");
-      div.append("<p><a href='/articles/" + articles[i].id + "'>" + articles[i].title + "</a></p>")
-      div.append("<p><a href='#' class='js-more' data-id='" + articles[i].id + "'><font color='orange'>More...</font></a><p>")
-      div.append("<p id='articleInfo-" + articles[i].id + "'></p><br>")
-    }
+  function appendArticleJSON(json) {
+      $('.loading').remove();
+      // we want to find the DOM element for the div with the class articles
+      var div = $('.articles')
+      // we want to iterate over the articles
+      debugger;
+      if (json.length !== undefined) {
+        for (var i = 0; i < json.length; i++) {
+          appendToDOM(div, json[i]);
+        }
+        return;
+      }
+
+      appendToDOM(div, json);
+  }
+
+  function appendToDOM(element, article) {
+    element.append(`
+      <p>DOI: ${article.doi}</p>
+      <p><a href="/articles/${article.id}" >${article.title}</a></p>
+      <p class="js-more" data-id="${article.id}" style="color:orange; cursor:pointer;">More...<p>
+      <p id="articleInfo-${article.id}"></p><br>
+    `)
+  }
+
+  function addEventListeners() {
     $(".js-more").on("click", function(event){
       var articleId = $(this).attr("data-id");
-      console.log($(this));
+      // console.log($(this));
       $(this).hide();
       $.get("/articles/" + articleId + ".json", function(article) {
         var entry = new ListEntry(article);
@@ -54,21 +78,27 @@ $(function() {
       });
       event.preventDefault();
     });
-  });
+  }
 
   $("#article_form").on("submit", function(event){
     url = this.action;
     var values = $(this).serialize();
-    $.post(url, values).done(function(article){
-      var articleHtml = "<p>DOI: "  + article.doi + "</p>" +
-                        "<p><a href='/articles/" + article.id + "'>" + article.title + "</a></p>" +
-                        "<p><a href='#' class='js-more' data-id='" + article.id + "'><font color='orange'>More...</font></a><p>" +
-                        "<p id='articleInfo-" + article.id + "'></p><br>";
-      $('.articles').prepend(articleHtml);
-      $('#article_form')[0].reset();
-      // reset the button
-      $('input[data-disable-with]').removeAttr("disabled");
+    fetch(url, {
+      method: "POST",
+      body: values
     })
+    .then(function(response) {
+      return response.json()
+    })
+    .then(appendArticleJSON)
+    .then(addEventListeners)
+    .catch(function(error) {
+      console.log('Error!: ', error)
+    })
+
+    $('#article_form')[0].reset(); //reset the form
+
+    $('input[data-disable-with]').removeAttr("disabled"); // re-activate the Create Artcle button
 
     event.preventDefault();
   })

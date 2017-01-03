@@ -7,6 +7,7 @@ class ArticlesController < ApplicationController
   end
 
   def create
+    binding.pry
     if params[:article][:doi] == ""
       flash[:alert] = "Please add DOI (Digital object identifier)."
       redirect_to new_article_path
