@@ -47,7 +47,7 @@ $(function() {
       // we want to find the DOM element for the div with the class articles
       var div = $('.articles')
       // we want to iterate over the articles
-      debugger;
+      // debugger;
       if (json.length !== undefined) {
         for (var i = 0; i < json.length; i++) {
           appendToDOM(div, json[i]);
@@ -60,6 +60,15 @@ $(function() {
 
   function appendToDOM(element, article) {
     element.append(`
+      <p>DOI: ${article.doi}</p>
+      <p><a href="/articles/${article.id}" >${article.title}</a></p>
+      <p class="js-more" data-id="${article.id}" style="color:orange; cursor:pointer;">More...<p>
+      <p id="articleInfo-${article.id}"></p><br>
+    `)
+  }
+
+  function prependToDOM(element, article) {
+    element.prepend(`
       <p>DOI: ${article.doi}</p>
       <p><a href="/articles/${article.id}" >${article.title}</a></p>
       <p class="js-more" data-id="${article.id}" style="color:orange; cursor:pointer;">More...<p>
@@ -81,25 +90,33 @@ $(function() {
   }
 
   $("#article_form").on("submit", function(event){
-    url = this.action;
+    url = this.action
+
     var values = $(this).serialize();
     fetch(url, {
       method: "POST",
+      headers: {
+        "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+      }, //needed to correct Error Code 422 & SyntaxError: Unexpected token < in JSON at position 0
+      credentials: 'include', //needed to correct Error Code 422
       body: values
     })
     .then(function(response) {
-      return response.json()
+      return response.json();
     })
-    .then(appendArticleJSON)
+    .then(function(json) {
+      console.log(json);
+      var div = $('.articles');
+      prependToDOM(div, json);
+
+      $('#article_form')[0].reset(); //reset the form
+
+      $('input[data-disable-with]').removeAttr("disabled"); // re-activate the Create Artcle button
+    })
     .then(addEventListeners)
     .catch(function(error) {
       console.log('Error!: ', error)
     })
-
-    $('#article_form')[0].reset(); //reset the form
-
-    $('input[data-disable-with]').removeAttr("disabled"); // re-activate the Create Artcle button
-
     event.preventDefault();
   })
 
