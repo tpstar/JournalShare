@@ -13,3 +13,58 @@
  *= require_tree .
  *= require_self
  */
+section {
+  padding-top: 60px;
+}
+
+._row {
+    max-width: 1140px;
+    margin: 0 auto;
+}
+
+.clearfix:after {
+	content: "";
+	clear: both;
+	display: table;
+}
+
+header {
+  background-color: #232739;
+}
+
+/* Navigation */
+
+nav img { /* logo */
+  height: 60px;
+  width: auto;
+  float: left;
+  margin: 15px 0 10px;
+}
+
+.main-nav{
+    float: right;
+    list-style: none; /* get rid of bullet points */
+    margin-top: 25px;
+    font-size: 110%;
+}
+
+.main-nav li {
+    display: inline-block; /* so they can be side by side */
+    margin-left: 32px;
+}
+
+
+.main-nav li a:link,
+.main-nav li a:visited {
+    font-weight: 300;
+    padding: 8px 8px;
+    color: #fff;
+    display: inline-block;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+.main-nav li a:hover,
+.main-nav li a:active {
+    color: #555;
+    background-color: #D0D8ff;
+}
